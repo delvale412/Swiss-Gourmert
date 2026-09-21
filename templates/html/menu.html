@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<link rel="stylesheet" href="/static/css/menu.css">
+
+<section class="internal-page-header">
+    <h1>Nosso Cardápio</h1>
+    <p style="color: rgba(255,255,255,0.8); margin-top: 10px;">Clique nos pratos para ver detalhes</p>
+</section>
+
+<section class="section-padding" style="background-color: #f9f9f9;">
+    <div class="container">
+        
+        {% for categoria, itens in cardapio.items() %}
+            <div class="menu-category" style="margin-bottom: 4rem;">
+                <h2 class="category-title">{{ categoria }}</h2>
+
+                <div class="menu-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 2.5rem; align-items: stretch;">
+                    
+                    {% for item in itens %}
+                    
+                    {% if categoria == "Para Compartilhar" %}
+                        {% set tag_serves = "👥 Ideal para Dividir" %}
+                    {% elif categoria == "Combos" %}
+                        {% set tag_serves = "📦 Combo" %}
+                    {% else %}
+                        {% set tag_serves = "🍽️ Individual" %}
+                    {% endif %}
+
+                    <div class="menu-item" onclick="openModal(this)"
+                         data-name="{{ item.nome }}"
+                         data-desc="{{ item.desc }}"
+                         data-price="{{ item.preco }}"
+                         data-img="/static/img/{{ item.img }}"
+                         data-destaque="{{ 'true' if item.destaque else 'false' }}"
+                         data-serves="{{ tag_serves }}"> <div class="menu-img-frame">
+                            {% if item.destaque %}
+                                <span class="badge-destaque" style="position: absolute; top: 10px; left: 10px; background: #FFD700; color: #000; padding: 5px 10px; border-radius: 20px; font-size: 0.8rem; font-weight: bold; z-index: 5; box-shadow: 0 2px 5px rgba(0,0,0,0.2);">Destaque</span>
+                            {% endif %}
+                            
+                            <img src="/static/img/{{ item.img }}" alt="{{ item.nome }}" onerror="this.onerror=null; this.src='https://placehold.co/600x400/fff/da291c?text=Swiss';">
+                        </div>
+
+                        <div class="menu-content">
+                            <h3 class="menu-item-name">{{ item.nome }}</h3>
+                            <div class="menu-item-price">{{ item.preco }}</div>
+                            <p class="menu-item-desc">{{ item.desc }}</p>
+                            
+                            <div class="card-footer-tags">
+                                <span class="info-pill">{{ tag_serves }}</span>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+
+                </div>
+            </div>
+        {% endfor %}
+
+    </div>
+</section>
+
+<div id="productModal" class="modal-overlay" onclick="closeModal(event)">
+    <div class="modal-content" onclick="event.stopPropagation()">
+        
+        <span class="close-modal" onclick="closeModalDirect()">×</span>
+        
+        <div class="modal-img-col">
+            <img id="modalImg" src="" alt="Detalhe do Prato">
+        </div>
+        
+        <div class="modal-text-col">
+            <span id="modalBadge" class="info-pill" style="align-self: flex-start; margin-bottom: 10px; background: #FFD700; color: #000; display: none;">Destaque</span>
+            
+            <h2 id="modalTitle">Nome do Prato</h2>
+            <div id="modalPrice">R$ 00,00</div>
+            
+            <p id="modalDesc">Descrição...</p>
+            
+            <div style="display: flex; gap: 10px; margin-bottom: 30px;">
+                <span id="modalServes" class="info-pill">🍽️ Individual</span>
+                <span class="info-pill">❤️ Favorito</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="/static/js/menu.js"></script>
+
+{% endblock %}

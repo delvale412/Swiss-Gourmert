@@ -18,20 +18,50 @@ async def vercel_path_middleware(request: Request, call_next):
         request.scope["path"] = path[len("/api"):]
     return await call_next(request)
 
+# --- TRATAMENTO DE ERROS COM DETALHES ---
+@app.exception_handler(Exception)
+async def global_exception_handler(request: Request, exc: Exception):
+    import traceback
+    return HTMLResponse(
+        content=f"<html><body><h2>Erro Interno da Aplicação</h2><pre>{traceback.format_exc()}</pre></body></html>",
+        status_code=500
+    )
+
 # --- CONFIGURAÇÃO DE DIRETÓRIOS ---
 BASE_DIR = Path(__file__).resolve().parent
 ROOT_DIR = BASE_DIR.parent
 
-# Suporte flexível aos arquivos estáticos tanto em app/static quanto public/static
-STATIC_DIR = BASE_DIR / "static"
-if not STATIC_DIR.exists():
-    STATIC_DIR = ROOT_DIR / "public" / "static"
+# Busca dinâmica do diretório de templates em múltiplos locais suportados pela Vercel
+POSSIBLE_TEMPLATE_DIRS = [
+    BASE_DIR / "templates" / "html",
+    ROOT_DIR / "app" / "templates" / "html",
+    ROOT_DIR / "templates" / "html",
+    Path.cwd() / "app" / "templates" / "html",
+    Path.cwd() / "templates" / "html",
+    Path("/var/task/app/templates/html"),
+    Path("/var/task/templates/html"),
+]
 
-app.mount("/static", StaticFiles(directory=str(STATIC_DIR)), name="static")
-
-# Configura os templates HTML
-TEMPLATES_DIR = BASE_DIR / "templates" / "html"
+TEMPLATES_DIR = next((d for d in POSSIBLE_TEMPLATE_DIRS if d.exists() and (d / "index.html").exists()), BASE_DIR / "templates" / "html")
 templates = Jinja2Templates(directory=str(TEMPLATES_DIR))
+
+# Suporte flexível aos arquivos estáticos tanto em app/static quanto public/static
+POSSIBLE_STATIC_DIRS = [
+    BASE_DIR / "static",
+    ROOT_DIR / "public" / "static",
+    ROOT_DIR / "app" / "static",
+    Path.cwd() / "public" / "static",
+    Path.cwd() / "app" / "static",
+    Path("/var/task/app/static"),
+    Path("/var/task/public/static"),
+]
+
+STATIC_DIR = next((s for s in POSSIBLE_STATIC_DIRS if s.exists()), None)
+if STATIC_DIR:
+    try:
+        app.mount("/static", StaticFiles(directory=str(STATIC_DIR)), name="static")
+    except Exception:
+        pass
 
 # --- DADOS INSTITUCIONAIS ---
 DADOS = {
