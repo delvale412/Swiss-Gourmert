@@ -6,6 +6,18 @@ from pathlib import Path
 
 app = FastAPI(title="Swiss Gourmet", description="Site Institucional")
 
+# Middleware para normalizar caminhos de requisição reescritos pela Vercel
+@app.middleware("http")
+async def vercel_path_middleware(request: Request, call_next):
+    path = request.scope.get("path", "")
+    if path == "/api/index.py" or path == "/api" or path == "/api/":
+        request.scope["path"] = "/"
+    elif path.startswith("/api/index.py/"):
+        request.scope["path"] = path[len("/api/index.py"):]
+    elif path.startswith("/api/"):
+        request.scope["path"] = path[len("/api"):]
+    return await call_next(request)
+
 # --- CONFIGURAÇÃO DE DIRETÓRIOS ---
 BASE_DIR = Path(__file__).resolve().parent
 ROOT_DIR = BASE_DIR.parent
