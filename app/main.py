@@ -111,11 +111,14 @@ DESTAQUES = [
 
 @app.get("/", response_class=HTMLResponse)
 async def home(request: Request):
-    return templates.TemplateResponse("index.html", {
-        "request": request, 
-        "title": "Swiss Gourmet - Início",
-        "destaques": DESTAQUES
-    })
+    return templates.TemplateResponse(
+        request=request,
+        name="index.html",
+        context={
+            "title": "Swiss Gourmet - Início",
+            "destaques": DESTAQUES
+        }
+    )
 
 @app.get("/menu", response_class=HTMLResponse)
 async def menu(request: Request):
@@ -184,28 +187,42 @@ async def menu(request: Request):
         ]
     }
     
-    return templates.TemplateResponse("menu.html", {"request": request, "title": "Cardápio | Swiss Gourmet", "cardapio": cardapio})
+    return templates.TemplateResponse(
+        request=request,
+        name="menu.html",
+        context={"title": "Cardápio | Swiss Gourmet", "cardapio": cardapio}
+    )
 
 @app.get("/historia", response_class=HTMLResponse)
 async def historia(request: Request):
-    return templates.TemplateResponse("historia.html", {
-        "request": request,
-        "historia": DADOS["historia"],
-        "premios": DADOS["premios"],
-        "fundadora": DADOS["fundadora"],
-        "title": "Nossa História - Swiss Gourmet"
-    })
+    return templates.TemplateResponse(
+        request=request,
+        name="historia.html",
+        context={
+            "historia": DADOS["historia"],
+            "premios": DADOS["premios"],
+            "fundadora": DADOS["fundadora"],
+            "title": "Nossa História - Swiss Gourmet"
+        }
+    )
 
 @app.get("/midia", response_class=HTMLResponse)
 async def midia(request: Request):
-    return templates.TemplateResponse("midia.html", {
-        "request": request,
-        "influencers": DADOS["influencers"],
-        "noticias": DADOS["midia_noticias"],
-        "festivais": DADOS["festivais"],
-        "title": "Na Mídia e Eventos - Swiss Gourmet"
-    })
+    return templates.TemplateResponse(
+        request=request,
+        name="midia.html",
+        context={
+            "influencers": DADOS["influencers"],
+            "noticias": DADOS["midia_noticias"],
+            "festivais": DADOS["festivais"],
+            "title": "Na Mídia e Eventos - Swiss Gourmet"
+        }
+    )
 
 @app.get("/localizacao", response_class=HTMLResponse)
 async def localizacao(request: Request):
-    return templates.TemplateResponse("localizacao.html", {"request": request, "title": "Localização - Swiss Gourmet"})
+    return templates.TemplateResponse(
+        request=request,
+        name="localizacao.html",
+        context={"title": "Localização - Swiss Gourmet"}
+    )
