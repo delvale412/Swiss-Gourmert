@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<section class="hero">
+    <h1>SWISS GOURMET</h1>
+    
+    <p style="font-size: 1.4rem; max-width: 600px; font-weight: 300; opacity: 0.9; margin-bottom: 2rem;">
+        A fusão definitiva entre a tradição dos Alpes e a gastronomia de Brasília.
+    </p>
+    
+    <div style="display: flex; gap: 20px;">
+        <a href="/menu" class="btn-primary" style="background: white; color: var(--brand-red);">Ver Menu</a>
+    </div>
+
+    <div class="highlight-badge">
+        Desde 2007 • SHIN QI 09/10
+    </div>
+</section>
+
+<div class="features-strip">
+    <div class="feature-item">
+        <div class="feature-title">Originalidade</div>
+        <div class="feature-desc">Receita suíça autêntica.</div>
+    </div>
+    <div class="feature-item">
+        <div class="feature-title">Conforto</div>
+        <div class="feature-desc">Estacionamento Gratuito.</div>
+    </div>
+    <div class="feature-item">
+        <div class="feature-title">Ambiente</div>
+        <div class="feature-desc">Acessível.</div>
+    </div>
+    <div class="feature-item">
+        <div class="feature-title">Horários</div>
+        <div class="feature-desc">Qui a Dom (Noite/Fim de semana).</div>
+    </div>
+</div>
+
+<section class="split-section">
+    <div class="split-text">
+        <h2>O Ritual da Raclette</h2>
+        <p>
+            Esqueça o comum. No Swiss Gourmet, trazemos a experiência sensorial do queijo raclette derretido na hora.
+        </p>
+        <p>
+            Utilizamos peças inteiras de queijo importado e maturado, raspadas generosamente sobre hambúrgueres artesanais e batatas rústicas. O resultado é uma textura cremosa e um sabor inigualável.
+        </p>
+        <a href="/menu" style="color: var(--brand-red); font-weight: 700; text-transform: uppercase; letter-spacing: 1px; border-bottom: 2px solid var(--brand-red); padding-bottom: 5px;">
+            Ver Cardápio
+        </a>
+    </div>
+    <div class="split-image">
+        <img src="/static/img/raclettes.jpg" alt="Raclette Swiss Gourmet">
+    </div>
+</section>
+
+<section class="split-section" style="direction: rtl;"> <div class="split-text" style="direction: ltr;"> <h2>Nossa História</h2>
+        <p>
+            Tudo começou em 2007, com o sonho de trazer a verdadeira comida de rua suíça para o clima tropical de Brasília.
+        </p>
+        <p>
+            O que começou como uma pequena operação tornou-se referência no Quituart, Lago Norte. Somos movidos pela paixão por ingredientes de qualidade e pela hospitalidade.
+        </p>
+        <a href="/historia" style="color: var(--text-dark); font-weight: 700; text-transform: uppercase; letter-spacing: 1px; border-bottom: 2px solid var(--text-dark); padding-bottom: 5px;">
+            Ler trajetória completa
+        </a>
+    </div>
+    <div class="split-image">
+        <img src="/static/img/salsichao.png" alt="História Swiss Gourmet">
+    </div>
+</section>
+
+<section class="section-padding text-center" style="background: var(--bg-light); margin-bottom: 0;">
+    <h2 style="font-size: 2rem; margin-bottom: 1rem; color: var(--text-dark);">Venha nos visitar</h2>
+    <p style="margin-bottom: 2rem; color: #666;">Sem reservas complicadas. Apenas chegue e aproveite.</p>
+    <a href="/localizacao" class="btn-primary">Ver Mapa e Horários</a>
+</section>
+
+{% endblock %}

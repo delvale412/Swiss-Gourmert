@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title }}</title>
+
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23da291c'/%3E%3Crect x='13' y='6' width='6' height='20' fill='white'/%3E%3Crect x='6' y='13' width='20' height='6' fill='white'/%3E%3C/svg%3E">
+
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title }}</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="icon" href="/static/img/favicon.ico">
+</head>
+<body>
+
+    <header class="header">
+        <nav class="navbar">
+            <a href="/" class="logo">
+                Swiss Gourmet
+                <span>Desde 2007 • Brasil/Suíça</span>
+            </a>
+
+            <div class="hamburger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+
+            <div class="nav-links">
+                <a href="/">Início</a>
+                <a href="/menu">Cardápio</a>
+                <a href="/historia">História</a>
+                <a href="/midia">Mídia & Eventos</a>
+                <a href="/localizacao">Localização</a>
+                
+                <a href="https://www.instagram.com/swiss.gourmet/" target="_blank" class="insta-btn">
+                    Instagram
+                </a>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer class="footer">
+        <p>&copy; 2025 Swiss Gourmet. Todos os direitos reservados.</p>
+        <p style="font-size: 0.7rem; color: #555; margin-top: 10px;">
+            SHIN QI 09/10 Canteiro Central - Lago Norte, Brasília/DF
+        </p>
+    </footer>
+
+    <script src="/static/js/script.js"></script>
+
+</body>
+</html>
